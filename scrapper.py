@@ -49,20 +49,25 @@ async def title(text, page, job):
     soup= BeautifulSoup(text, 'lxml')
 
     # it will find all the h2 header with class name
-    Title= soup.find_all('h2', attrs={"class": "jobTitle jobTitle-color-purple"})
+    Title= soup.find_all('td', {"class": "resultContent"})
     for title in Title:
         di[f'job{page}{job}']={}
-        di[f'job{page}{job}']['title']=title.find_next('span')['title']
+        ti = title.find_next('span').text
+        if ti=='new':
+            di[f'job{page}{job}']['title']=title.find_all('span')[1].text
+        else:
+            di[f'job{page}{job}']['title']=ti
         job+=1
+        # print(title)
 
 # for getting the company name
 async def companyName(text, page, job):
     soup=BeautifulSoup(text, 'lxml')
-    Title= soup.find_all('div', attrs={'class': 'heading6 company_location tapItem-gutter'})
+    Title= soup.find_all('div', {'class': 'heading6 company_location tapItem-gutter companyInfo'})
     for title in Title:
         try:
-            di[f'job{page}{job}']['companyName']= title.pre.span.text
-            di[f'job{page}{job}']['companyLocation']= title.pre.div.text
+            di[f'job{page}{job}']['companyName']= title.find('span',{'class':'companyName'}).text
+            di[f'job{page}{job}']['companyLocation']= title.find('div',{'class':'companyLocation'}).text
             job+=1
         except KeyError:
             pass

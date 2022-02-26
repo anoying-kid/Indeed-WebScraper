@@ -15,7 +15,7 @@
 
 >Install library using:
 >```
->pip install requirements.txt
+>pip3 install -r requirements.txt
 >```
 
 >Clone this project:

@@ -27,3 +27,5 @@ ETH
 >0x3B1472F86C6fe9dB5A753e238f9e46580fcFfAD4
 
 **Note** : Won't work with VS Code jupyter
+
+[LICENSE](LICENSE)
